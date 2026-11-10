@@ -1,12 +1,12 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>FocusUp</title><link rel="stylesheet" href="popup.css"></head>
-<body><main><h1>FocusUp</h1><p>Choose how you want to browse.</p><fieldset><legend>Active mode</legend>
-<label><input type="radio" name="mode" value="focus"><span><strong>Focus</strong><small>Study, work and concentration</small></span></label>
-<label><input type="radio" name="mode" value="personal"><span><strong>Personal</strong><small>Everyday browsing with your boundaries</small></span></label>
+<body><main><h1>FocusUp</h1><p>Choose how you want to browse.</p><fieldset><legend>Choose your mode</legend>
+<label><input type="radio" name="mode" value="focus"><span><strong>Focus Mode</strong><small>Study, work and concentration</small></span></label>
+<label><input type="radio" name="mode" value="personal"><span><strong>Personal Mode</strong><small>Everyday browsing with your boundaries</small></span></label>
 </fieldset><h2 id="list-title">Blocked websites</h2>
-<form id="domain-form"><label for="domain" class="domain-label">Website domain or URL</label><div class="add-row"><input id="domain" type="text" placeholder="e.g. example.com" required maxlength="2048"><button type="submit">Add</button></div></form>
-<p class="note">Blocks this domain and its subdomains in the selected mode. URLs are saved as domains.</p>
-<ul id="domains" aria-label="Blocked websites"></ul><p id="empty">No websites blocked in this mode.</p>
-<p id="status" role="status" aria-live="polite">Loading…</p><button id="retry" type="button">Refresh / retry</button>
-<p><a href="../settings/youtube.html" target="_blank" rel="noopener">YouTube controls →</a></p>
+<form id="domain-form"><label for="domain" class="domain-label">Website address</label><div class="add-row"><input id="domain" type="text" placeholder="e.g. example.com" required maxlength="2048"><button type="submit">Add</button></div></form>
+<p class="note">Enter a website address or link. The whole website, including addresses like www.example.com, will be blocked in this mode.</p>
+<ul id="domains" aria-label="Blocked websites"></ul><p id="empty">You haven't blocked any websites in this mode yet.</p>
+<p id="status" role="status" aria-live="polite">Loading your settings…</p><button id="retry" type="button">Reload settings</button>
+<p><a href="../settings/youtube.html" target="_blank" rel="noopener">Manage YouTube →</a></p>
 </main><script type="module" src="popup.js"></script></body></html>

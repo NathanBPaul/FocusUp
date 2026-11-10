@@ -17,13 +17,13 @@
     if (!reason) {overlay?.remove();return;}
     if (!overlay) {
       overlay = document.createElement("div"); overlay.id = "focusup-gate";
-      overlay.setAttribute("role","region");overlay.setAttribute("aria-label","FocusUp restriction");
+      overlay.setAttribute("role","region");overlay.setAttribute("aria-label","Blocked by your FocusUp settings");
       const panel = document.createElement("section"), title = document.createElement("h1"), text = document.createElement("p"), link = document.createElement("a");
       title.textContent = "FocusUp · YouTube";
       text.id = "focusup-reason"; link.href = "https://www.youtube.com/"; link.textContent = "Return to YouTube Home";
       panel.append(title,text,link);overlay.append(panel);document.documentElement.append(overlay);
     }
-    const text = reason + " in " + mode + " mode. Change your YouTube controls through the FocusUp popup.";
+    const text = reason + ". You're using " + (mode === "focus" ? "Focus Mode" : "Personal Mode") + ". To change this, open FocusUp and choose Manage YouTube.";
     if (overlay.querySelector("#focusup-reason").textContent !== text) overlay.querySelector("#focusup-reason").textContent = text;
     document.querySelectorAll("video,audio").forEach(media=>{if(!media.paused) media.pause();});
   }
@@ -63,7 +63,7 @@
       const nextMode = stored.activeProfileId === "focus" ? "focus" : "personal";
       if (mode !== nextMode) firstShort = "";
       mode = nextMode;config = api.normalize(stored.youtube?.[mode]);loaded = true;schedule();
-    } catch { gate("Unable to load YouTube controls. Reload this tab"); }
+    } catch { gate("Your YouTube settings couldn't be loaded. Please reload this tab"); }
   }
   document.addEventListener("yt-navigate-start",()=>{ready=false;schedule();});
   document.addEventListener("yt-navigate-finish",()=>{ready=true;lastVideo=location.pathname+location.search;route=lastVideo;schedule();});

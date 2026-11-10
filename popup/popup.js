@@ -8,7 +8,7 @@ let settings;
 function show() {
   const id = settings.activeProfileId;
   for (const input of inputs) input.checked = input.value === id;
-  document.querySelector("#list-title").textContent = `Blocked in ${PROFILES[id].name}`;
+  document.querySelector("#list-title").textContent = `Websites blocked in ${PROFILES[id].name} Mode`;
   list.replaceChildren();
   for (const domain of settings.blockedDomains[id]) {
     const item = document.createElement("li");
@@ -23,18 +23,22 @@ function show() {
     list.append(item);
   }
   document.querySelector("#empty").hidden = settings.blockedDomains[id].length > 0;
-  status.textContent = `Active: ${PROFILES[id].name}. Rules applied.`;
+  status.textContent = `You're using ${PROFILES[id].name} Mode. Your settings are applied.`;
 }
 async function run(action, values = {}) {
   document.querySelectorAll("input, button").forEach(item => item.disabled = true);
-  status.textContent = "Applying…";
+  status.textContent = "Updating your settings…";
   try {
     settings = await requestSettings(action, values);
     show();
     if (action === "add") domainInput.value = "";
   } catch (error) {
     if (settings) show();
-    status.textContent = error.message;
+    const message = error.message || "";
+    if (/already/.test(message)) status.textContent = "This website is already blocked in this mode.";
+    else if (/500|up to/.test(message)) status.textContent = "You can block up to 500 websites in each mode. Remove a website and try again.";
+    else if (/domain/.test(message)) status.textContent = "Enter a website address, such as example.com, or paste a link.";
+    else status.textContent = "Your settings couldn't be loaded or updated. Please try reloading your settings.";
   } finally {
     document.querySelectorAll("input, button").forEach(item => item.disabled = !settings);
     document.querySelector("#retry").disabled = false;

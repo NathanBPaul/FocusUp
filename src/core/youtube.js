@@ -35,10 +35,10 @@
     const video = /^\/(watch|shorts|embed|live)(?:\/|$)/.test(path);
     const channelPage = /^\/(?:@[^/]+|channel\/[^/]+)(?:\/|$)/.test(path);
     if (video || channelPage) {
-      if (video && !config.allowVideos) return "Video pages are blocked";
+      if (video && !config.allowVideos) return "Watching videos is blocked";
       if (identities.some(id => config.blockedChannels.includes(id))) return "This channel is blocked";
       if (config.strictChannels && !identities.some(id => config.allowedChannels.includes(id)))
-        return identities.length ? "This channel is not on your allowlist" : "Channel could not yet be identified; strict access is active";
+        return identities.length ? "This channel isn't in your allowed channels" : "This channel hasn't been identified yet. Only approved channels can be watched";
     }
     return "";
   }

@@ -15,7 +15,7 @@ test("page policy, unknown channels and explicit block precedence", () => {
   const config = {...api.defaults(), strictChannels:true, allowedChannels:["@study"], blockedChannels:["@games"]};
   assert.equal(api.reason("/watch",config,["@study"]),"");
   assert.match(api.reason("/watch",config,[]),/identified/);
-  assert.match(api.reason("/watch",config,["@other"]),/allowlist/);
+  assert.match(api.reason("/watch",config,["@other"]),/allowed channels/);
   assert.match(api.reason("/watch",{...config,blockedChannels:["@study"]},["@study"]),/blocked/);
   assert.match(api.reason("/shorts/a",{...config,shorts:"block"},["@study"]),/Shorts/);
   assert.match(api.reason("/results",{...config,allowSearch:false}),/Search/);
@@ -23,5 +23,5 @@ test("page policy, unknown channels and explicit block precedence", () => {
   assert.equal(api.reason("/",config),"");
   assert.match(api.reason("/@games/videos",config,["@games"]),/blocked/);
   assert.equal(api.reason("/@study/videos",config,["@study"]),"");
-  assert.match(api.reason("/embed/id",{...config,allowVideos:false}),/Video/);
+  assert.match(api.reason("/embed/id",{...config,allowVideos:false}),/Watching videos/);
 });

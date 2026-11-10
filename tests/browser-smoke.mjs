@@ -33,7 +33,7 @@ const extension = worker.url.split("/").slice(0, 3).join("/");
 const {targetId: popupId}=await call('Target.createTarget',{url:extension+'/popup/popup.html'});
 const {sessionId: popup}=await call('Target.attachToTarget',{targetId:popupId,flatten:true});
 async function evaluate(session,expression){const result=await call('Runtime.evaluate',{expression,awaitPromise:true,returnByValue:true},session);if(result.exceptionDetails)throw new Error(JSON.stringify(result.exceptionDetails));return result.result.value;}
-for(let i=0;i<40;i++){if(await evaluate(popup,"document.querySelector('#status')?.textContent.includes('Rules applied')"))break;await new Promise(r=>setTimeout(r,100));}
+for(let i=0;i<40;i++){if(await evaluate(popup,"document.querySelector('#status')?.textContent.includes('Your settings are applied')"))break;await new Promise(r=>setTimeout(r,100));}
 async function settings(action,values={}){const result=await evaluate(popup,'chrome.runtime.sendMessage('+JSON.stringify({type:'focusup-settings',action,...values})+')');assert.equal(result.ok,true,JSON.stringify(result));return result.settings;}
 await settings('mode',{profileId:'focus'});
 await settings('add',{profileId:'focus',domain:'example.com'});
@@ -51,7 +51,7 @@ async function navigate(url){
 for(const domain of ['example.com','www.example.com']){
  const page=await navigate('https://'+domain);
  assert.ok(page.location.includes('/blocked/blocked.html'),page.location);
- await new Promise(r=>setTimeout(r,500)); assert.match(await evaluate(page.sessionId,"document.querySelector('#reason').textContent"),/Focus mode/);
+ await new Promise(r=>setTimeout(r,500)); assert.match(await evaluate(page.sessionId,"document.querySelector('#reason').textContent"),/Focus Mode/);
 }
 await settings('mode',{profileId:'personal'});
 assert.deepEqual(await evaluate(workerSession,'chrome.declarativeNetRequest.getDynamicRules()'),[]);
@@ -81,7 +81,7 @@ assert.equal(await evaluate(yt,"getComputedStyle(document.querySelector('#relate
 await config({strictChannels:true,allowedChannels:['@study']});
 assert.equal(await reason(),'');
 await config({strictChannels:true,allowedChannels:['@other']});
-assert.match(await reason(),/allowlist/);
+assert.match(await reason(),/allowed channels/);
 await config({blockedChannels:['@study']});
 assert.match(await reason(),/channel is blocked/);
 await settings('mode',{profileId:'personal'});await delay(700);
@@ -100,7 +100,7 @@ await evaluate(yt,"history.pushState({},'', '/shorts/second')");
 await delay(700);assert.match(await reason(),/first Short/);
 await config({shorts:'block'});assert.match(await reason(),/Shorts are blocked/);
 await config({shorts:'allow'});assert.equal(await reason(),'');
-await config({allowVideos:false});assert.match(await reason(),/Video pages/);
+await config({allowVideos:false});assert.match(await reason(),/Watching videos/);
 await config({hideHome:true});
 await evaluate(yt,"history.pushState({},'', '/')");await delay(700);assert.equal(await evaluate(yt,"document.documentElement.classList.contains('focusup-home')"),true);assert.equal(await reason(),'');
 await config({});
@@ -109,10 +109,10 @@ assert.equal(await reason(),'');
 const {targetId: settingsId} = await call('Target.createTarget',{url:extension+'/settings/youtube.html'});
 const {sessionId: settingsPage} = await call('Target.attachToTarget',{targetId:settingsId,flatten:true});
 await delay(700);
-assert.equal(await evaluate(settingsPage,"document.querySelector('#status').textContent"),'Settings loaded.');
+assert.equal(await evaluate(settingsPage,"document.querySelector('#status').textContent"),'Focus Mode settings loaded.');
 await evaluate(settingsPage,"document.querySelector('[name=hideRelated]').checked=true;document.querySelector('#config').requestSubmit()");
 await delay(700);
-assert.match(await evaluate(settingsPage,"document.querySelector('#status').textContent"),/Saved/);
+assert.match(await evaluate(settingsPage,"document.querySelector('#status').textContent"),/have been saved/);
 assert.equal((await settings('get')).youtube.focus.hideRelated,true);
 assert.equal((await settings('get')).youtube.personal.hideRelated,false);
 console.log('PASS: browser adapter fixtures: recommendation CSS, channels, unknown-channel policy, SPA routes, live mode changes, Shorts first/all/off, search, subscriptions, video pages, Home and settings form persistence.');
@@ -128,10 +128,10 @@ console.log('LIVE YouTube:',JSON.stringify(report));
 if(report.app) {
  await config({allowVideos:false});
  await delay(700);
- assert.match(await evaluate(live,"document.querySelector('#focusup-reason')?.textContent || ''"),/Video pages/);
+ assert.match(await evaluate(live,"document.querySelector('#focusup-reason')?.textContent || ''"),/Watching videos/);
  
 await call('Page.reload',{},live);await delay(4000);
-assert.match(await evaluate(live,"document.querySelector('#focusup-reason')?.textContent || ''"),/Video pages/);
+assert.match(await evaluate(live,"document.querySelector('#focusup-reason')?.textContent || ''"),/Watching videos/);
 const owner = await evaluate(live,"document.querySelector('#owner ytd-channel-name a')?.href");
 assert.ok(owner,'Live creator link available');
 await config({strictChannels:true,allowedChannels:[owner]});
@@ -146,8 +146,3 @@ console.log('PASS: live YouTube page gate, reload persistence, creator allowlist
 
 await call('Browser.close');
 } finally {if(ws)ws.close();browser.kill();}
-
-
-
-
-
