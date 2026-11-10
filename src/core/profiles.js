@@ -1,4 +1,4 @@
-// Data-driven defaults; no blocking rules are enabled in v0.1.
+// Each mode starts with an empty, user-configured blocklist.
 export const PROFILES = Object.freeze({
   focus: Object.freeze({ id: "focus", name: "Focus", rules: [] }),
   personal: Object.freeze({ id: "personal", name: "Personal", rules: [] })

@@ -3,4 +3,9 @@
 <body><main><h1>FocusUp</h1><p>Choose how you want to browse.</p><fieldset><legend>Active mode</legend>
 <label><input type="radio" name="mode" value="focus"><span><strong>Focus</strong><small>Study, work and concentration</small></span></label>
 <label><input type="radio" name="mode" value="personal"><span><strong>Personal</strong><small>Everyday browsing with your boundaries</small></span></label>
-</fieldset><p id="status" role="status" aria-live="polite">Loading…</p><p class="note">Blocking features are coming later.</p></main><script type="module" src="popup.js"></script></body></html>
+</fieldset><h2 id="list-title">Blocked websites</h2>
+<form id="domain-form"><label for="domain" class="domain-label">Website domain or URL</label><div class="add-row"><input id="domain" type="text" placeholder="e.g. example.com" required maxlength="2048"><button type="submit">Add</button></div></form>
+<p class="note">Blocks this domain and its subdomains in the selected mode. URLs are saved as domains.</p>
+<ul id="domains" aria-label="Blocked websites"></ul><p id="empty">No websites blocked in this mode.</p>
+<p id="status" role="status" aria-live="polite">Loading…</p><button id="retry" type="button">Refresh / retry</button>
+</main><script type="module" src="popup.js"></script></body></html>
