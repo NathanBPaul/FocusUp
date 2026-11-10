@@ -1,0 +1,1 @@
+{"manifest_version":3,"name":"FocusUp","version":"0.1.0","description":"Intentional browsing with Focus and Personal modes.","action":{"default_popup":"popup/popup.html"},"permissions":["storage"]}
