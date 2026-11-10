@@ -2,7 +2,7 @@
 
 FocusUp is a local-first Manifest V3 Chrome extension for intentional browsing.
 
-## Version 0.2
+## Website blocking (v0.2)
 - Separate custom domain blocklists for Focus and Personal.
 - Add a domain or HTTP(S) URL; URLs are normalized to their hostname. Remove entries individually.
 - A listed domain includes its subdomains (example.com includes www.example.com). A listed subdomain does not block its parent.
@@ -32,4 +32,19 @@ Manual browser checks:
 
 Rules affect subsequent top-level navigations, including reloads. Already loaded pages are not forcibly closed. Embedded resources are not filtered. A blocked page records the mode/domain responsible at navigation time; after changing settings, visit the website again. Each mode supports up to 500 domains.
 
-Future milestones include YouTube content controls, presets, commitments, and private analytics.
+Next milestones: Instagram controls (v0.4), presets (v0.5), focus sessions (v0.6), commitments (v0.7), and private analytics (v0.8).
+
+## YouTube controls (v0.3)
+Open **YouTube controls** from the popup. Select which mode to edit, configure it, and save. Editing does not activate a mode; switching modes in the popup applies its saved controls to open YouTube tabs.
+
+- Shorts: allow, allow the first Short in a continuous Shorts visit, or block all. Leaving Shorts or switching modes resets the first-Short allowance. Reloading the tab also resets it; this is a browsing aid, not a commitment lock.
+- Hide Home recommendations, related/end-screen recommendations, and selected distracting sidebar links.
+- Allow or restrict search, subscriptions, and video pages.
+- Save channel allowlists and blocklists as @handles or /channel/UC… URLs, one per line. Blocklist wins. Strict access permits videos only after an allowed creator is identified; unknown creators are blocked. Recognized channel cards are hidden according to these rules, too.
+- Whole-domain blocks always apply before the YouTube content adapter. Both modes start with permissive YouTube defaults, preserving earlier settings.
+
+Channel aliases are not resolved through an external API: save both the handle and channel ID when needed. Creator matching uses rendered links, so identification depends on YouTube's markup. Desktop YouTube is the primary tested layout; mobile layouts and embeds may lack creator metadata and remain blocked in strict mode. Content controls act after the document starts loading, pause blocked playback, and update on navigation; they are not a network-level guarantee that video data never loads. YouTube UI changes may require adapter updates.
+
+Browser verification: with Node.js 22+ and Edge installed, run `node tests/browser-smoke.mjs`. Set `FOCUSUP_BROWSER` to another Chromium executable if needed. The test uses a temporary isolated browser profile, real DNR redirects, controlled YouTube document responses with the actual extension content scripts, and settings form interactions. Add `--live` to verify a live desktop watch page, channel lists, and persistence after reload. Live checks require network access and can be affected by consent or anti-bot pages. No packages need installing.
+
+After updating the extension, reload it in chrome://extensions and refresh existing YouTube tabs once to inject the new adapter. Subsequent setting and mode changes apply automatically.

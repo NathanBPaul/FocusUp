@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>YouTube controls · FocusUp</title><link rel="stylesheet" href="youtube.css"></head>
+<body><main><h1>YouTube controls</h1><p>Choose permissions for each mode. Whole-website blocks still apply.</p>
+<label>Edit mode <select id="profile"><option value="focus">Focus</option><option value="personal">Personal</option></select></label>
+<p id="active"></p><form id="config"><fieldset disabled><legend>Content and access</legend>
+<label>Shorts <select name="shorts"><option value="allow">Allow</option><option value="first">Allow first Short, block the next</option><option value="block">Block all Shorts</option></select></label>
+<div id="toggles"></div>
+<label>Allowed channels <textarea name="allowedChannels" rows="5" placeholder="@example&#10;https://www.youtube.com/channel/UC…"></textarea></label>
+<label>Blocked channels <textarea name="blockedChannels" rows="5" placeholder="@example"></textarea></label>
+<p>One @handle or channel ID URL per line, up to 200 per list. Blocked channels take priority. Strict access blocks videos until an allowed channel can be identified.</p>
+<p>Channel identification uses the page's creator links. For best coverage, save both a channel's @handle and its channel ID. Display names and legacy /c/ URLs are unsupported.</p>
+<button type="submit">Save controls</button></fieldset></form><p id="status" role="status" aria-live="polite">Loading…</p>
+<button id="reload" type="button">Reload saved settings</button></main><script type="module" src="youtube.js"></script></body></html>

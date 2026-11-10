@@ -17,7 +17,10 @@ export async function syncRules(settings) {
 async function handleSettings(message) {
   const previous = await getSettings();
   const next = structuredClone(previous);
-  if (message.action === "mode") {
+  if (message.action === "youtube") {
+    if (!isProfileId(message.profileId)) throw new Error("Unknown mode.");
+    next.youtube[message.profileId] = globalThis.FocusUpYouTube.normalize(message.config);
+  } else if (message.action === "mode") {
     if (!isProfileId(message.profileId)) throw new Error("Unknown mode.");
     next.activeProfileId = message.profileId;
   } else if (["add", "remove"].includes(message.action)) {

@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "FocusUp",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "minimum_chrome_version": "101",
   "description": "Intentional browsing with Focus and Personal website blocklists.",
   "action": {
@@ -27,6 +27,24 @@
       "matches": [
         "http://*/*",
         "https://*/*"
+      ]
+    }
+  ],
+  "content_scripts": [
+    {
+      "all_frames": true,
+      "run_at": "document_start",
+      "css": [
+        "src/adapters/youtube.css"
+      ],
+      "js": [
+        "src/core/youtube.js",
+        "src/adapters/youtube.js"
+      ],
+      "matches": [
+        "https://www.youtube.com/*",
+        "https://m.youtube.com/*",
+        "https://youtube.com/*"
       ]
     }
   ]

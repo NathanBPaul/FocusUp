@@ -84,6 +84,13 @@ test("worker migrates settings, isolates profiles, persists, reconciles, and han
   assert.deepEqual(dynamicRules, []);
   assert.equal((await send("mode", { profileId: "invalid" })).ok, false);
   assert.equal((await send("add", { profileId: "focus", domain: "*.bad.com" })).ok, false);
+  await send("youtube", { profileId: "focus", config: { shorts: "block", allowedChannels: ["@Study"] } });
+  const saved = (await send("get")).settings;
+  assert.equal(saved.youtube.focus.shorts, "block");
+  assert.deepEqual(saved.youtube.focus.allowedChannels, ["@study"]);
+  assert.equal(saved.youtube.personal.shorts, "allow");
+  assert.equal((await send("youtube", { profileId: "focus", config: { blockedChannels: ["bad name"] } })).ok, false);
+  assert.equal((await send("get")).settings.youtube.focus.shorts, "block");
   stored.blockedDomains.focus = Array.from({ length: 500 }, (_, i) => `d${i}.example.com`);
   assert.equal((await send("add", { profileId: "focus", domain: "overflow.com" })).ok, false);
 });
