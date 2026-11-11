@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "FocusUp",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "minimum_chrome_version": "101",
   "description": "Intentional browsing with Focus and Personal website blocklists.",
   "action": {
@@ -11,47 +11,27 @@
     "service_worker": "src/background.js",
     "type": "module"
   },
-  "permissions": [
-    "storage",
-    "declarativeNetRequest"
-  ],
-  "host_permissions": [
-    "http://*/*",
-    "https://*/*"
-  ],
+  "permissions": ["storage", "declarativeNetRequest"],
+  "host_permissions": ["http://*/*", "https://*/*"],
   "web_accessible_resources": [
     {
-      "resources": [
-        "blocked/blocked.html"
-      ],
-      "matches": [
-        "http://*/*",
-        "https://*/*"
-      ]
+      "resources": ["blocked/blocked.html"],
+      "matches": ["http://*/*", "https://*/*"]
     }
   ],
   "content_scripts": [
     {
       "matches": ["https://www.instagram.com/*", "https://instagram.com/*"],
-      "js": ["src/core/instagram.js", "src/adapters/instagram.js"],
+      "js": ["src/core/access.js", "src/core/instagram.js", "src/adapters/instagram.js"],
       "css": ["src/adapters/instagram.css"],
       "run_at": "document_start"
     },
     {
       "all_frames": true,
       "run_at": "document_start",
-      "css": [
-        "src/adapters/youtube.css"
-      ],
-      "js": [
-        "src/core/youtube.js",
-        "src/adapters/youtube.js"
-      ],
-      "matches": [
-        "https://www.youtube.com/*",
-        "https://m.youtube.com/*",
-        "https://youtube.com/*"
-      ]
+      "css": ["src/adapters/youtube.css"],
+      "js": ["src/core/access.js", "src/core/youtube.js", "src/adapters/youtube.js"],
+      "matches": ["https://www.youtube.com/*", "https://m.youtube.com/*", "https://youtube.com/*"]
     }
   ]
 }

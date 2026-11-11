@@ -1,16 +1,77 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Manage YouTube · FocusUp</title><link rel="stylesheet" href="youtube.css"></head>
-<body><main><h1>Manage YouTube</h1><p>Make YouTube work for you. Choose what you want to see and what you'd rather avoid.</p>
-<p><small>If you've blocked YouTube entirely in FocusUp, these settings won't override that restriction.</small></p>
-<label>Customize settings for <select id="profile"><option value="focus">Focus Mode</option><option value="personal">Personal Mode</option></select></label>
-<p id="active"></p><form id="config"><fieldset disabled><legend>What can you access?</legend>
-<label>YouTube Shorts <select name="shorts"><option value="allow">Allow all Shorts</option><option value="first">Block after the first Short</option><option value="block">Block all Shorts</option></select></label>
-<p>Choose how much access you want to short videos: watch without restrictions, stop when you move to the next Short, or prevent Shorts from opening.</p>
-<div id="toggles"></div>
-<label>Channels I want to allow <textarea name="allowedChannels" rows="5" placeholder="@Veritasium&#10;@3blue1brown"></textarea></label>
-<p>Enter one YouTube channel handle or channel ID link per line. You can add up to 200 channels to each list.</p>
-<label>Channels I want to block <textarea name="blockedChannels" rows="5" placeholder="@example"></textarea></label>
-<p>Videos from these channels will be blocked, even if they also appear in your allowed list.</p>
-<p>Add a channel using its @handle or channel ID link. For better accuracy, you can add both. Channel names alone won't work. Use an @handle such as @Veritasium or a link starting with youtube.com/channel/UC instead of older /c/ links.</p>
-<button type="submit">Save YouTube settings</button></fieldset></form><p id="status" role="status" aria-live="polite">Loading your YouTube settings…</p>
-<button id="reload" type="button">Restore saved settings</button></main><script type="module" src="youtube.js"></script></body></html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Manage YouTube · FocusUp</title>
+    <link rel="stylesheet" href="youtube.css" />
+  </head>
+  <body>
+    <main>
+      <h1>Manage YouTube</h1>
+      <p>Make YouTube work for you. Choose what you want to see and what you'd rather avoid.</p>
+      <p>
+        <small>
+          If you've blocked YouTube entirely in FocusUp, these settings won't override that
+          restriction.
+        </small>
+      </p>
+      <label>
+        Customize settings for
+        <select id="profile">
+          <option value="focus">Focus Mode</option>
+          <option value="personal">Personal Mode</option>
+        </select>
+      </label>
+      <p id="active"></p>
+      <form id="config">
+        <fieldset disabled>
+          <legend>What can you access?</legend>
+          <p id="exception-note" hidden></p>
+          <label>
+            YouTube Shorts
+            <select name="shorts">
+              <option value="allow">Allow all Shorts</option>
+              <option value="first">Block after the first Short</option>
+              <option value="block">Block all Shorts</option>
+            </select>
+          </label>
+          <p>
+            Choose how much access you want to short videos: watch without restrictions, stop when
+            you move to the next Short, or prevent Shorts from opening.
+          </p>
+          <div id="toggles"></div>
+          <label>
+            Channels I want to allow
+            <textarea
+              name="allowedChannels"
+              rows="5"
+              placeholder="@Veritasium&#10;@3blue1brown"
+            ></textarea>
+          </label>
+          <p>
+            Enter one YouTube channel handle or channel ID link per line. You can add up to 200
+            channels to each list.
+          </p>
+          <label>
+            Channels I want to block
+            <textarea name="blockedChannels" rows="5" placeholder="@example"></textarea>
+          </label>
+          <p>
+            Videos from these channels will be blocked, even if they also appear in your allowed
+            list.
+          </p>
+          <p>
+            Add a channel using its @handle or channel ID link. For better accuracy, you can add
+            both. Channel names alone won't work. Use an @handle such as @Veritasium or a link
+            starting with youtube.com/channel/UC instead of older /c/ links.
+          </p>
+          <button type="submit">Save YouTube settings</button>
+        </fieldset>
+      </form>
+      <p id="status" role="status" aria-live="polite">Loading your YouTube settings…</p>
+      <button id="reload" type="button">Restore saved settings</button>
+    </main>
+    <script type="module" src="youtube.js"></script>
+  </body>
+</html>

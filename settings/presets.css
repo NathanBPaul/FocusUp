@@ -1,0 +1,89 @@
+section {
+  margin: 24px 0;
+  padding: 20px;
+  border: 1px solid #c8d1e2;
+  border-radius: 10px;
+}
+section section {
+  background: #eef2fa;
+}
+h2 {
+  font-size: 20px;
+  margin-top: 0;
+}
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+input[type="text"] {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px;
+  font: inherit;
+  border: 1px solid #a9b5c9;
+  border-radius: 6px;
+}
+select {
+  max-width: 100%;
+}
+button {
+  line-height: 1.4;
+}
+button:disabled {
+  cursor: default;
+}
+.table-wrap {
+  overflow-x: auto;
+  margin: 16px 0;
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 14px;
+}
+th,
+td {
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid #c8d1e2;
+  padding: 10px;
+  overflow-wrap: anywhere;
+}
+th {
+  min-width: 130px;
+}
+tr.changed {
+  background: #e1ebff;
+}
+#warnings {
+  font-weight: 600;
+}
+#allowed-list {
+  list-style: none;
+  padding: 0;
+}
+#allowed-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 12px 0;
+}
+#allowed-list span {
+  overflow-wrap: anywhere;
+  min-width: 0;
+}
+#allowed-list button {
+  flex-shrink: 0;
+}
+#status {
+  position: sticky;
+  bottom: 0;
+  background: #f7f9fc;
+  padding: 10px 0;
+}
+a {
+  color: #3454a1;
+}

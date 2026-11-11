@@ -1,15 +1,41 @@
 html.focusup-home ytd-browse[page-subtype="home"] #contents,
-html.focusup-related #related,html.focusup-related .ytp-endscreen-content,
+html.focusup-related #related,
+html.focusup-related .ytp-endscreen-content,
 html.focusup-related .ytp-ce-element,
-html.focusup-shorts ytd-reel-shelf-renderer,html.focusup-shorts ytd-rich-shelf-renderer[is-shorts],
-html.focusup-shorts ytd-reel-item-renderer,html.focusup-shorts yt-shorts-lockup-view-model,
+html.focusup-shorts ytd-reel-shelf-renderer,
+html.focusup-shorts ytd-rich-shelf-renderer[is-shorts],
+html.focusup-shorts ytd-reel-item-renderer,
+html.focusup-shorts yt-shorts-lockup-view-model,
 html.focusup-shorts a[href^="/shorts/"],
 html.focusup-sidebar ytd-guide-entry-renderer:has(a[href^="/shorts"]),
 html.focusup-sidebar ytd-mini-guide-entry-renderer:has(a[href^="/shorts"]),
 html.focusup-sidebar ytd-guide-entry-renderer:has(a[href^="/feed/trending"]),
-html.focusup-sidebar ytd-guide-entry-renderer:has(a[href^="/gaming"]){display:none!important}
-#focusup-gate{position:fixed!important;inset:0!important;z-index:2147483647!important;background:#f7f9fc!important;color:#1c2940!important;display:grid!important;place-content:center!important;padding:30px!important;font:18px/1.5 system-ui!important}
-#focusup-gate section{max-width:600px}#focusup-gate a{color:#3454a1}
-html.focusup-gated{overflow:hidden!important}
-html.focusup-gated video{visibility:hidden!important}
-.focusup-channel-hidden{display:none!important}
+html.focusup-sidebar ytd-guide-entry-renderer:has(a[href^="/gaming"]) {
+  display: none !important;
+}
+#focusup-gate {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 2147483647 !important;
+  background: #f7f9fc !important;
+  color: #1c2940 !important;
+  display: grid !important;
+  place-content: center !important;
+  padding: 30px !important;
+  font: 18px/1.5 system-ui !important;
+}
+#focusup-gate section {
+  max-width: 600px;
+}
+#focusup-gate a {
+  color: #3454a1;
+}
+html.focusup-gated {
+  overflow: hidden !important;
+}
+html.focusup-gated video {
+  visibility: hidden !important;
+}
+.focusup-channel-hidden {
+  display: none !important;
+}

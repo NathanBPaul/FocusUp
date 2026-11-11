@@ -19,7 +19,7 @@ FocusUp is a local-first Manifest V3 Chrome extension for intentional browsing.
 Storage saves your settings. declarativeNetRequest and HTTP(S) host access allow the extension to redirect user-selected websites. Only the blocked HTML entry point is web accessible. Chrome internal pages and other non-HTTP(S) URLs are outside this feature.
 
 ## Verification
-Run `npm test` (Node.js 18 or newer; no install needed) for domain normalization, matching, profile isolation, migration, rule updates, persistence, startup reconciliation, serialized switches, limits, and failure recovery.
+Run `npm test` (Node.js 22 or newer; no install needed) for domain normalization, matching, profile isolation, migration, rule updates, persistence, startup reconciliation, serialized switches, limits, and failure recovery.
 
 Manual browser checks:
 1. In Focus, add example.com. Visit https://example.com and https://www.example.com; both should show the FocusUp explanation.
@@ -32,7 +32,7 @@ Manual browser checks:
 
 Rules affect subsequent top-level navigations, including reloads. Already loaded pages are not forcibly closed. Embedded resources are not filtered. A blocked page records the mode/domain responsible at navigation time; after changing settings, visit the website again. Each mode supports up to 500 domains.
 
-Next milestones: presets (v0.5), focus sessions (v0.6), commitments (v0.7), and private analytics (v0.8).
+Next milestones: focus sessions (v0.6), commitments (v0.7), and private analytics (v0.8).
 
 ## YouTube controls (v0.3)
 Open **Manage YouTube** from the popup. Select which mode to edit, configure it, and save. Editing does not activate a mode; switching modes in the popup applies its saved controls to open YouTube tabs.
@@ -65,3 +65,32 @@ No additional permissions, backend, accounts, or dependencies are added. The ada
 Verification: `npm test` includes Instagram policy, input, Reel allowance, migration and mode-isolation checks. `node tests/browser-smoke.mjs` also tests the actual Instagram adapter against controlled document responses: Reels, Explore, feed restoration, messaging routes, accounts, settings form validation, reload persistence, and DNR precedence. `--live` additionally attempts a public Instagram profile block/restore check. Live feeds, Reel scrolling, and DMs require a signed-in account and need a separate manual check; fixture tests don't prove support for every current Instagram layout.
 
 To try it, reload FocusUp in chrome://extensions and refresh open Instagram tabs. In Focus Mode, save a Reel limit of 1, enable Explore blocking and feed hiding, then check those pages and messaging. Switch to Personal Mode with default settings and confirm access returns. Test your chosen account links, then close/reopen settings and restart Chrome to confirm persistence.
+
+## Presets and exceptions (v0.5)
+Open **Presets & exceptions** from the popup. Choose the mode to edit, a preset and a level, then select **Preview changes**. The comparison lists every supported setting before and after applying. Nothing changes until you select **Apply to Focus Mode** or **Apply to Personal Mode**. The other mode and its active/inactive state stay unchanged.
+
+Built-in starting setups include School, College, Entrance Exams, Competitive Exams, Professional Work, Reading & Learning, and Habit Reset, each with Relaxed, Focused and Strict levels. They share a base of short-video controls, with suggestions tailored to the category (for example, game websites for School, subscriptions during exam preparation, or video access for Reading). These are editable suggestions, not automatic content classification or endorsements of particular learning channels.
+
+Relaxed removes Shorts/Reels and suggests blocking TikTok. Focused hides additional feeds and recommendations and suggests more website blocks. Strict adds website blocks and approved-channel/account-only access. Strict initially has no approved channels or accounts: add them in Manage YouTube/Instagram before viewing their content, or explicitly allow the website. The preview warns about empty approved lists.
+
+Applying a preset replaces the selected mode's blocked websites, content controls and channel/account lists with the previewed configuration. Existing allowed websites are preserved and combined with any allowed websites saved in the preset. Save your current mode as a custom preset first to keep a reusable copy. A one-step **Undo last preset** restores the prior configuration while it remains unchanged; later mode edits disable undo to protect newer changes. A changed preview or preset must be reviewed again before applying.
+
+### Custom presets
+Save any mode as a named preset, save a copy of a built-in or custom preset, rename a saved preset, or update it from the mode's current settings. Edit individual restrictions in the popup and Manage YouTube/Instagram, then update the saved preset from that mode. You can keep 20 saved presets with unique names of up to 60 characters. Applying, renaming or deleting a custom preset never edits a built-in template. Deleting a preset requires confirmation and doesn't change either mode's active settings.
+
+### Website exceptions and priority
+Allowed websites are explicit exceptions for one mode. They include subdomains, follow domain boundaries, and take priority over FocusUp's blocked websites **and content controls**. For example, `learn.example.com` remains accessible when `example.com` is blocked, while `other.example.com` stays blocked. Allowing `youtube.com` bypasses its Shorts, channel and recommendation controls on YouTube addresses; removing the exception restores those controls. The settings pages show when an exception bypasses their controls. An exception for a parent website doesn't allow embedded content served from a different domain.
+
+Current priority is explicit website exceptions → mode restrictions → preset starting values → default access. Preset values become editable mode settings when applied; templates don't keep reapplying in the background. Protected access and commitments from the broader roadmap aren't implemented yet. Chrome DNR uses higher-priority allow rules for domain exceptions; content adapters use the same domain-boundary policy. Already-open website-blocked pages may need to be visited again after adding an exception. No accounts, external services, tracking or extra permissions are introduced.
+
+### Preset verification
+`npm test` covers all built-in levels, normalization, mode isolation, custom preset lifecycle, stale previews, preservation of exceptions, undo conflicts and storage-failure rollback. `node tests/browser-smoke.mjs` covers the actual settings UI, preview/cancel/apply/undo, custom operations and reload, real DNR parent-domain exceptions, and live updates to YouTube/Instagram exception handling on controlled pages. Use `--presets-only` to run just that browser flow. Set `FOCUSUP_BROWSER` to your Chromium executable; on this system Brave is installed. Existing YouTube and Instagram fixture/live tests remain available with `--live`.
+
+## Code formatting
+The project uses two-space indentation, consistent block braces and the settings in `.prettierrc.json`. To format source files without adding a project dependency, run:
+
+```powershell
+npm exec --yes --package=prettier@3.6.2 -- prettier --write src popup settings blocked tests manifest.json package.json .prettierrc.json
+```
+
+Formatting tools are development utilities; the extension itself still has no external runtime dependencies.

@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Presets & exceptions · FocusUp</title>
+    <link rel="stylesheet" href="youtube.css" />
+    <link rel="stylesheet" href="presets.css" />
+  </head>
+  <body>
+    <main>
+      <h1>Presets & exceptions</h1>
+      <p>Start with a setup that suits your day, then make it your own.</p>
+      <label>
+        Customize settings for
+        <select id="profile">
+          <option value="focus">Focus Mode</option>
+          <option value="personal">Personal Mode</option>
+        </select>
+      </label>
+      <p id="active"></p>
+      <section>
+        <h2>Choose a starting setup</h2>
+        <p>
+          Presets change this mode's blocked websites and YouTube and Instagram settings. Review
+          every change before applying it. Your allowed websites stay allowed.
+        </p>
+        <label>
+          Preset
+          <select id="preset"></select>
+        </label>
+        <p id="description"></p>
+        <label>
+          Level
+          <select id="intensity">
+            <option value="relaxed">Relaxed</option>
+            <option value="focused" selected>Focused</option>
+            <option value="strict">Strict</option>
+          </select>
+        </label>
+        <p id="level-description"></p>
+        <div class="actions">
+          <button id="preview" type="button">Preview changes</button>
+          <button id="undo" type="button">Undo last preset</button>
+        </div>
+        <p id="undo-note"></p>
+        <section id="preview-panel" hidden aria-labelledby="preview-title">
+          <h2 id="preview-title">Review changes</h2>
+          <p id="preview-intro"></p>
+          <p id="warnings"></p>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col">Setting</th>
+                  <th scope="col">Now</th>
+                  <th scope="col">After applying</th>
+                </tr>
+              </thead>
+              <tbody id="comparison"></tbody>
+            </table>
+          </div>
+          <div class="actions">
+            <button id="apply" type="button">Apply preset</button>
+            <button id="cancel-preview" type="button">Cancel</button>
+          </div>
+        </section>
+      </section>
+      <section>
+        <h2>Make your own preset</h2>
+        <p>
+          Adjust websites in the popup and content settings in
+          <a href="youtube.html">Manage YouTube</a>
+          or
+          <a href="instagram.html">Manage Instagram</a>
+          , then save this mode as a preset. You can save up to 20.
+        </p>
+        <label>
+          Preset name
+          <input id="preset-name" type="text" maxlength="60" placeholder="My evening study setup" />
+        </label>
+        <div class="actions">
+          <button id="save-current" type="button">Save this mode as a new preset</button>
+          <button id="duplicate" type="button">Save a copy of the selected preset</button>
+          <button id="update" type="button">Update selected preset from this mode</button>
+          <button id="rename" type="button">Rename selected preset</button>
+          <button id="delete" type="button">Delete selected preset</button>
+        </div>
+        <p>
+          Built-in presets always keep their original settings. Save a copy to create your own
+          version.
+        </p>
+        <div id="delete-panel" hidden>
+          <p id="delete-question"></p>
+          <div class="actions">
+            <button id="confirm-delete" type="button">Delete saved preset</button>
+            <button id="cancel-delete" type="button">Keep preset</button>
+          </div>
+        </div>
+      </section>
+      <section>
+        <h2>Websites I want to allow</h2>
+        <p>
+          These are exceptions for the mode you're editing. Each website and its subdomains will
+          bypass FocusUp's website blocks and content controls, even if a preset would restrict
+          them. This doesn't allow content hosted on other websites.
+        </p>
+        <form id="allow-form">
+          <label>
+            Website address
+            <input
+              id="allowed-domain"
+              type="text"
+              required
+              maxlength="2048"
+              placeholder="e.g. learn.example.com"
+            />
+          </label>
+          <button type="submit">Allow website</button>
+        </form>
+        <ul id="allowed-list"></ul>
+        <p id="allowed-empty">No website exceptions in this mode.</p>
+        <p>
+          Remove an exception to use this mode's normal restrictions again. Existing pages may need
+          a refresh after a website block changes.
+        </p>
+      </section>
+      <p id="status" role="status" aria-live="polite">Loading your presets…</p>
+      <button id="reload" type="button">Reload saved settings</button>
+    </main>
+    <script type="module" src="presets.js"></script>
+  </body>
+</html>

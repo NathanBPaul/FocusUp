@@ -1,9 +1,36 @@
-html.focusup-instagram-feed main{display:none!important}
-.focusup-instagram-account-hidden{display:none!important}
+html.focusup-instagram-feed main {
+  display: none !important;
+}
+.focusup-instagram-account-hidden {
+  display: none !important;
+}
 html.focusup-instagram-reels a[href^="/reel/"],
 html.focusup-instagram-reels a[href^="/reels/"],
-html.focusup-instagram-reels a[href$="/reels/"]{display:none!important}
-#focusup-instagram-gate{position:fixed!important;inset:0!important;z-index:2147483647!important;background:#f7f9fc!important;color:#1c2940!important;display:grid!important;place-content:center!important;padding:30px!important;font:18px/1.5 system-ui,sans-serif!important}
-#focusup-instagram-gate section{max-width:600px}#focusup-instagram-gate a{color:#3454a1}
-html.focusup-instagram-gated{overflow:hidden!important}
-html.focusup-instagram-gated video{visibility:hidden!important}
+html.focusup-instagram-reels a[href$="/reels/"] {
+  display: none !important;
+}
+#focusup-instagram-gate {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 2147483647 !important;
+  background: #f7f9fc !important;
+  color: #1c2940 !important;
+  display: grid !important;
+  place-content: center !important;
+  padding: 30px !important;
+  font:
+    18px/1.5 system-ui,
+    sans-serif !important;
+}
+#focusup-instagram-gate section {
+  max-width: 600px;
+}
+#focusup-instagram-gate a {
+  color: #3454a1;
+}
+html.focusup-instagram-gated {
+  overflow: hidden !important;
+}
+html.focusup-instagram-gated video {
+  visibility: hidden !important;
+}
