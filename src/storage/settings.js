@@ -1,8 +1,9 @@
 import { DEFAULT_PROFILE_ID, isProfileId } from "../core/profiles.js";
 import { normalizeDomain, MAX_DOMAINS } from "../core/rules.js";
 import "../core/youtube.js";
+import "../core/instagram.js";
 export async function getSettings() {
-  const stored = await chrome.storage.local.get(["activeProfileId", "blockedDomains", "youtube"]);
+  const stored = await chrome.storage.local.get(["activeProfileId", "blockedDomains", "youtube", "instagram"]);
   const blockedDomains = {};
   for (const id of ["focus", "personal"]) {
     blockedDomains[id] = [];
@@ -19,7 +20,12 @@ export async function getSettings() {
     try { youtube[id] = globalThis.FocusUpYouTube.normalize(stored.youtube?.[id]); }
     catch { youtube[id] = globalThis.FocusUpYouTube.defaults(); }
   }
-  return { activeProfileId: isProfileId(stored.activeProfileId) ? stored.activeProfileId : DEFAULT_PROFILE_ID, blockedDomains, youtube };
+  const instagram = {};
+  for (const id of ["focus", "personal"]) {
+    try { instagram[id] = globalThis.FocusUpInstagram.normalize(stored.instagram?.[id]); }
+    catch { instagram[id] = globalThis.FocusUpInstagram.defaults(); }
+  }
+  return { activeProfileId: isProfileId(stored.activeProfileId) ? stored.activeProfileId : DEFAULT_PROFILE_ID, blockedDomains, youtube, instagram };
 }
 export async function getActiveProfileId() { return (await getSettings()).activeProfileId; }
 export async function requestSettings(action = "get", values = {}) {

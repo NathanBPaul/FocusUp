@@ -17,7 +17,10 @@ export async function syncRules(settings) {
 async function handleSettings(message) {
   const previous = await getSettings();
   const next = structuredClone(previous);
-  if (message.action === "youtube") {
+  if (message.action === "instagram") {
+    if (!isProfileId(message.profileId)) throw new Error("Unknown mode.");
+    next.instagram[message.profileId] = globalThis.FocusUpInstagram.normalize(message.config);
+  } else if (message.action === "youtube") {
     if (!isProfileId(message.profileId)) throw new Error("Unknown mode.");
     next.youtube[message.profileId] = globalThis.FocusUpYouTube.normalize(message.config);
   } else if (message.action === "mode") {

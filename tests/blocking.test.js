@@ -91,6 +91,15 @@ test("worker migrates settings, isolates profiles, persists, reconciles, and han
   assert.equal(saved.youtube.personal.shorts, "allow");
   assert.equal((await send("youtube", { profileId: "focus", config: { blockedChannels: ["bad name"] } })).ok, false);
   assert.equal((await send("get")).settings.youtube.focus.shorts, "block");
+  assert.equal((await send("get")).settings.instagram.focus.reels, "allow");
+  assert.equal((await send("instagram", {profileId:"focus",config:{reels:"limit",reelLimit:2,allowedAccounts:["@NASA"]}})).ok, true);
+  const instagram = (await send("get")).settings.instagram;
+  assert.equal(instagram.focus.reelLimit, 2);
+  assert.deepEqual(instagram.focus.allowedAccounts, ["nasa"]);
+  assert.equal(instagram.personal.reels, "allow");
+  assert.equal((await send("instagram", {profileId:"focus",config:{reelLimit:0}})).ok, false);
+  assert.equal((await send("get")).settings.instagram.focus.reelLimit, 2);
+  assert.equal((await send("get")).settings.youtube.focus.shorts, "block");
   stored.blockedDomains.focus = Array.from({ length: 500 }, (_, i) => `d${i}.example.com`);
   assert.equal((await send("add", { profileId: "focus", domain: "overflow.com" })).ok, false);
 });

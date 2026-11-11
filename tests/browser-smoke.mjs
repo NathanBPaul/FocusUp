@@ -2,6 +2,7 @@
 import { spawn } from 'node:child_process';
 import { mkdtemp, readFile } from 'node:fs/promises';
 import assert from 'node:assert/strict';
+import { testInstagram } from './instagram-browser.mjs';
 const root = process.cwd();
 const delay = ms => new Promise(r=>setTimeout(r,ms));
 let eventHandler = () => {};
@@ -144,5 +145,6 @@ console.log('PASS: live YouTube page gate, reload persistence, creator allowlist
 }
 }
 
+await testInstagram({call,evaluate,settings,delay,extension,live:process.argv.includes('--live'),setEventHandler: handler => {eventHandler=handler;}});
 await call('Browser.close');
 } finally {if(ws)ws.close();browser.kill();}
